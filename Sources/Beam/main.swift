@@ -21,7 +21,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         panel.level = .floating
         panel.isOpaque = false
         panel.backgroundColor = .clear
-        panel.hasShadow = true
+        panel.hasShadow = false  // Liquid Glass draws its own shadow; the old material (before macOS 26) needs the window one
+        if #unavailable(macOS 26) { panel.hasShadow = true }
         panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
         panel.delegate = self
         panel.contentView = NSHostingView(rootView: LauncherView(model: model))
@@ -30,6 +31,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
         installKeyMonitor()
         registerHotKey()
+        // For screenshots: BEAM_SHOW_ON_LAUNCH=saf opens the bar with that query, no hotkey needed.
+        if let q = ProcessInfo.processInfo.environment["BEAM_SHOW_ON_LAUNCH"] {
+            show()
+            if let f = NSScreen.screens.first(where: { $0.localizedName.contains("Built-in") })?.visibleFrame {
+                panel.setFrameOrigin(NSPoint(x: f.midX - 340, y: f.maxY - f.height * 0.22 - 560))
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { self.model.query = q }  // wait for the app index
+        }
         try? SMAppService.mainApp.register()  // start at login; fails harmlessly outside a .app bundle
     }
 

@@ -2,3 +2,5 @@
 Beam.app/
 .DS_Store
 .swiftpm/
+.vscode/
+.idea/

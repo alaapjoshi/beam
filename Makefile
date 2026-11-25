@@ -10,7 +10,7 @@ app:
 	codesign --force --sign - $(APP)
 
 install: app
-	pkill -x Beam || true
+	pkill -x Beam && sleep 1 || true
 	rm -rf /Applications/Beam.app && cp -R $(APP) /Applications/
 	open /Applications/Beam.app
 

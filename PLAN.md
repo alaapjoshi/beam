@@ -6,14 +6,14 @@
 
 ## Features (v1)
 - Apps: launch anything in /Applications, /System/Applications, ~/Applications (fuzzy match, most-used ranked first)
-- Files: matching files from Spotlight appear under apps automatically; Enter opens, ⌘Enter reveals in Finder
+
 
 
 ## Milestones
 1. Hotkey + floating panel + app search
-2. File search
+2. (dropped: file search)
 3. (dropped: clipboard history)
 4. Tests for the ranking/parsing core, Makefile, launch-at-login
 
 ## Out of scope
-Calculator, web search, system commands, clipboard history, Alfred workflows/plugins, snippets/text expansion, themes, settings UI, iCloud sync.
+File search, calculator, web search, system commands, clipboard history, Alfred workflows/plugins, snippets/text expansion, themes, settings UI, iCloud sync.
